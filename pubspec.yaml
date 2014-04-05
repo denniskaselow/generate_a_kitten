@@ -1,0 +1,10 @@
+name: generate_a_kitten
+description: A sample dartemis application
+dependencies:
+  browser: any
+  canvas_query: any
+  dartemis_toolbox: any
+  gamedev_helpers:
+    git: https://github.com/denniskaselow/gamedev_helpers
+#    path: ../gamedev_helpers
+  hop: any
