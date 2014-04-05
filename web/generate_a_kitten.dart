@@ -1,6 +1,6 @@
 import 'package:generate_a_kitten/client.dart';
 
-@MirrorsUsed(targets: const [
+@MirrorsUsed(targets: const [RenderingSystem
                             ])
 import 'dart:mirrors';
 
@@ -19,6 +19,7 @@ class Game extends GameBase {
   List<EntitySystem> getSystems() {
     return [
             new CanvasCleaningSystem(canvas),
+            new RenderingSystem(ctx),
             new FpsRenderingSystem(ctx)
     ];
   }
