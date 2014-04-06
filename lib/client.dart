@@ -2,6 +2,7 @@ library client;
 
 import 'dart:html';
 export 'dart:html';
+import 'dart:math';
 
 import 'package:generate_a_kitten/shared.dart';
 export 'package:generate_a_kitten/shared.dart';
