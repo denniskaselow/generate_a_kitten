@@ -2,6 +2,8 @@ part of client;
 
 
 class ButtonListeningSystem extends VoidEntitySystem {
+  CanvasElement canvas;
+  ButtonListeningSystem(this.canvas);
 
   @override
   void initialize() {
@@ -33,6 +35,12 @@ class ButtonListeningSystem extends VoidEntitySystem {
     });
     querySelector('#randomizeBody').onClick.listen((_) {
       eventBus.fire(randomizeBodyEvent, null);
+    });
+    querySelector('#saveKitten').onClick.listen((_) {
+      var trimmedCanvas = cq(cq(canvas).copy());
+      var rect = trimmedCanvas.trim(color: '#FFFFFF');
+      var dataUrl = trimmedCanvas.canvas.toDataUrl("image/png");
+      (querySelector('#saveKitten') as AnchorElement).href = dataUrl;
     });
   }
 

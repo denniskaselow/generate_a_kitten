@@ -94,7 +94,7 @@ class Game extends GameBase {
 
   List<EntitySystem> getSystems() {
     return [
-            new ButtonListeningSystem(),
+            new ButtonListeningSystem(canvas),
             new HeadRandomizingSystem(),
             new EarsRandomizingSystem(),
             new EyeRandomizingSystem(),
