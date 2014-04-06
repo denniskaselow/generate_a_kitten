@@ -20,11 +20,20 @@ class ButtonListeningSystem extends VoidEntitySystem {
       eventBus.fire(randomizeEyesEvent, null);
       eventBus.fire(randomizeMouthEvent, null);
     });
+    querySelector('#randomizeKitten').onClick.listen((_) {
+      eventBus.fire(randomizeHeadEvent, null);
+      eventBus.fire(randomizeEarsEvent, null);
+      eventBus.fire(randomizeEyesEvent, null);
+      eventBus.fire(randomizeMouthEvent, null);
+      eventBus.fire(randomizeTailEvent, null);
+    });
+    querySelector('#randomizeTail').onClick.listen((_) {
+      eventBus.fire(randomizeTailEvent, null);
+    });
   }
 
   @override
-  void processSystem() {
-  }
+  void processSystem() {}
 
   bool checkProcessing() => false;
 }

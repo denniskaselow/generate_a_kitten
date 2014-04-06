@@ -11,3 +11,4 @@ class BezierPath extends Component {
 class Head extends Component {}
 class Eye extends Component {}
 class Mouth extends Component {}
+class Tail extends Component {}

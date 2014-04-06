@@ -140,3 +140,48 @@ class MouthRandomizingSystem extends RandomizingSystem {
     bp.path[1].storage[4] = y1;
   }
 }
+
+class TailRandomizingSystem extends RandomizingSystem {
+  TailRandomizingSystem() : super(randomizeTailEvent, [Tail]);
+
+  @override
+  void processEntity(Entity entity) {
+    var bp = bpm.get(entity);
+    var xMod = random.nextBool() ? 1 : -1;
+    var lengthMod = getRandom(0.5, 2.5);
+    var x1 = getRandom(90, 150);
+    var y1 = getRandom(15, 55);
+    var x2 = getRandom(x1 + 20, x1 + 40);
+    var y2 = getRandom(y1 - 10, y1 + 10);
+    bp.path[0].storage[0] = getRandom(50, 75);
+    bp.path[0].storage[1] = getRandom(0, 30);
+    bp.path[0].storage[3] = getRandom(100, 150);
+    bp.path[0].storage[4] = getRandom(-20, 10);
+    bp.path[0].storage[6] = x1;
+    bp.path[0].storage[7] = y1;
+
+    bp.path[1].storage[6] = x2;
+    bp.path[1].storage[7] = y2;
+    // parallel
+    bp.path[1].storage[3] = bp.path[1].storage[6] + (bp.path[0].storage[6] - bp.path[0].storage[3]) * getRandom(0.5, 1.5);
+    bp.path[1].storage[4] = bp.path[1].storage[7] + (bp.path[0].storage[7] - bp.path[0].storage[4]) * getRandom(0.5, 1.5);
+    // parallel
+    bp.path[2].storage[3] = (bp.path[0].storage[0] - bp.origin.x.abs()) * 2.5 + bp.path[2].storage[6].abs();
+    bp.path[2].storage[4] = (bp.path[0].storage[1] - bp.origin.y) * 2.5 + bp.path[2].storage[7];
+
+    for (int i = 0; i < bp.path.length - 1; i++) {
+      var diffX = bp.path[i].storage[6] - bp.path[i].storage[3];
+      var diffY = bp.path[i].storage[7] - bp.path[i].storage[4];
+
+      bp.path[i + 1].storage[0] = bp.path[i].storage[6] + diffX * lengthMod;
+      bp.path[i + 1].storage[1] = bp.path[i].storage[7] + diffY * lengthMod;
+    }
+
+    bp.path.map((segment) => segment.storage).forEach((storage) {
+      storage[0] = storage[0].abs() * xMod;
+      storage[3] = storage[3].abs() * xMod;
+      storage[6] = storage[6].abs() * xMod;
+    });
+    bp.origin.x = bp.origin.x.abs() * xMod;
+  }
+}
