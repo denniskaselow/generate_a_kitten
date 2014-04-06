@@ -141,6 +141,55 @@ class MouthRandomizingSystem extends RandomizingSystem {
   }
 }
 
+class BodyRandomizingSystem extends RandomizingSystem {
+  ComponentMapper<Body> bm;
+  double x1, x2, x3, x4;
+  double y1, y2, y3, y4;
+  BodyRandomizingSystem() : super(randomizeBodyEvent, [Body]);
+
+  @override
+  void begin() {
+    // legs
+    x1 = getRandom(-70, -40);
+    y1 = getRandom(120, 180);
+    x2 = getRandom(-20, -10);
+    y2 = getRandom(120, 180);
+    // lower body
+    x3 = getRandom(-25, -15);
+    y3 = getRandom(40, 90);
+    x4 = getRandom(x3, x3 + 10);
+    y4 = getRandom(y3 - 20, 90);
+  }
+
+  @override
+  void processEntity(Entity entity) {
+    var bp = bpm.get(entity);
+    var modX = bm.get(entity).modX;
+    var modY = bm.get(entity).modY;
+
+    bp.path[0].storage[0] = x1 * modX;
+    bp.path[0].storage[1] = y1 * modY;
+    bp.path[0].storage[3] = x2 * modX;
+    bp.path[0].storage[4] = y2 * modY;
+
+    bp.path[2].storage[0] = -x2 * modX;
+    bp.path[2].storage[1] = y2 * modY;
+    bp.path[2].storage[3] = -x1 * modX;
+    bp.path[2].storage[4] = y1 * modY;
+
+    bp.path[0].storage[6] = x3 * modX;
+    bp.path[0].storage[7] = y3 * modY;
+    bp.path[1].storage[6] = -x3 * modX;
+    bp.path[1].storage[7] = y3 * modY;
+
+    bp.path[1].storage[0] = x4 * modX;
+    bp.path[1].storage[1] = y4 * modY;
+    bp.path[1].storage[3] = -x4 * modX;
+    bp.path[1].storage[4] = y4 * modY;
+
+  }
+}
+
 class TailRandomizingSystem extends RandomizingSystem {
   TailRandomizingSystem() : super(randomizeTailEvent, [Tail]);
 

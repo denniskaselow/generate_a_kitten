@@ -3,7 +3,8 @@ import 'package:generate_a_kitten/client.dart';
 @MirrorsUsed(targets: const [BezierRenderingSystem, DebugBezierRenderingSystem,
                              RandomizingSystem, EarsRandomizingSystem,
                              HeadRandomizingSystem, EyeRandomizingSystem,
-                             MouthRandomizingSystem, TailRandomizingSystem
+                             MouthRandomizingSystem, TailRandomizingSystem,
+                             BodyRandomizingSystem
                             ])
 import 'dart:mirrors';
 
@@ -26,7 +27,8 @@ class Game extends GameBase {
         ])
     ]);
     // body behind
-    addEntity([new BezierPath(
+    addEntity([new Body(modX: 0.45, modY: 0.85),
+               new BezierPath(
         new Vector2(0.0, -15.0), new Vector2(-30.0, 0.0), [
           // left leg
           new Matrix3(-30.0, 140.0, 0.0, -10.0, 120.0, 0.0, -5.0, 50.0, 0.0),
@@ -37,14 +39,15 @@ class Game extends GameBase {
         ])
     ]);
     // body front
-    addEntity([new BezierPath(
-        new Vector2(0.0, -10.0), new Vector2(-40.0, 0.0), [
+    addEntity([new Body(),
+               new BezierPath(
+        new Vector2(0.0, -10.0), new Vector2(-40.0, -10.0), [
           // left leg
           new Matrix3(-55.0, 160.0, 0.0, -15.0, 140.0, 0.0, -20.0, 70.0, 0.0),
           // lower body
           new Matrix3(-20.0, 70.0, 0.0, 20.0, 70.0, 0.0, 20.0, 70.0, 0.0),
           // right leg
-          new Matrix3(20.0, 140.0, 0.0, 55.0, 160.0, 0.0, 40.0, 0.0, 0.0),
+          new Matrix3(20.0, 140.0, 0.0, 55.0, 160.0, 0.0, 40.0, -10.0, 0.0),
         ])
     ]);
     // head
@@ -96,6 +99,7 @@ class Game extends GameBase {
             new EarsRandomizingSystem(),
             new EyeRandomizingSystem(),
             new MouthRandomizingSystem(),
+            new BodyRandomizingSystem(),
             new TailRandomizingSystem(),
             new CanvasCleaningSystem(canvas),
             new BezierRenderingSystem(ctx),

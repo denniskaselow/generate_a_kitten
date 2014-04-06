@@ -18,9 +18,11 @@ var randomizeEarsEvent = new EventType<RandomizeEars>();
 var randomizeEyesEvent = new EventType<RandomizeEyes>();
 var randomizeMouthEvent = new EventType<RandomizeMouth>();
 var randomizeTailEvent = new EventType<RandomizeTail>();
+var randomizeBodyEvent = new EventType<RandomizeBody>();
 
 class RandomizeHead {}
 class RandomizeEars {}
 class RandomizeEyes {}
 class RandomizeMouth {}
+class RandomizeBody {}
 class RandomizeTail {}

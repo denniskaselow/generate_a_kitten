@@ -26,9 +26,13 @@ class ButtonListeningSystem extends VoidEntitySystem {
       eventBus.fire(randomizeEyesEvent, null);
       eventBus.fire(randomizeMouthEvent, null);
       eventBus.fire(randomizeTailEvent, null);
+      eventBus.fire(randomizeBodyEvent, null);
     });
     querySelector('#randomizeTail').onClick.listen((_) {
       eventBus.fire(randomizeTailEvent, null);
+    });
+    querySelector('#randomizeBody').onClick.listen((_) {
+      eventBus.fire(randomizeBodyEvent, null);
     });
   }
 
