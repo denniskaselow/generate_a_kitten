@@ -1,6 +1,8 @@
 import 'package:generate_a_kitten/client.dart';
 
-@MirrorsUsed(targets: const [BezierRenderingSystem, DebugBezierRenderingSystem
+@MirrorsUsed(targets: const [BezierRenderingSystem, DebugBezierRenderingSystem,
+                             RandomizingSystem, EarsRandomizingSystem,
+                             HeadRandomizingSystem, EyeRandomizingSystem
                             ])
 import 'dart:mirrors';
 
@@ -44,7 +46,8 @@ class Game extends GameBase {
         ])
     ]);
     // head
-    addEntity([new BezierPath(
+    addEntity([new Head(),
+               new BezierPath(
         new Vector2(0.0, -80.0), new Vector2(-60.0, 10.0), [
           // left ear
           new Matrix3(-60.0, 10.0, 0.0, -70.0, -40.0, 0.0, -70.0, -40.0, 0.0),
@@ -59,21 +62,24 @@ class Game extends GameBase {
         ])
     ]);
     // left eye
-    addEntity([new BezierPath(
+    addEntity([new Eye(),
+               new BezierPath(
         new Vector2(-30.0, -60.0), new Vector2(10.0, 0.0), [
           new Matrix3(10.0, -20.0, 0.0, -10.0, -20.0, 0.0, -10.0, 0.0, 0.0),
           new Matrix3(-10.0, 20.0, 0.0, 10.0, 20.0, 0.0, 10.0, 0.0, 0.0),
         ])
     ]);
     // right eye
-    addEntity([new BezierPath(
+    addEntity([new Eye(),
+               new BezierPath(
         new Vector2(30.0, -60.0), new Vector2(10.0, 0.0), [
           new Matrix3(10.0, -20.0, 0.0, -10.0, -20.0, 0.0, -10.0, 0.0, 0.0),
           new Matrix3(-10.0, 20.0, 0.0, 10.0, 20.0, 0.0, 10.0, 0.0, 0.0),
        ])
     ]);
-    // facial expression
-    addEntity([new BezierPath(
+    // mouth
+    addEntity([new Mouth(),
+               new BezierPath(
         new Vector2(0.0, -20.0), new Vector2(-15.0, -10.0), [
           new Matrix3(-30.0, 15.0, 0.0, 0.0, 15.0, 0.0, 0.0, -10.0, 0.0),
           new Matrix3(0.0, 15.0, 0.0, 30.0, 15.0, 0.0, 15.0, -10.0, 0.0),
@@ -83,6 +89,11 @@ class Game extends GameBase {
 
   List<EntitySystem> getSystems() {
     return [
+            new ButtonListeningSystem(),
+            new HeadRandomizingSystem(),
+            new EarsRandomizingSystem(),
+            new EyeRandomizingSystem(),
+            new MouthRandomizingSystem(),
             new CanvasCleaningSystem(canvas),
             new BezierRenderingSystem(ctx),
 //            new DebugBezierRenderingSystem(ctx),

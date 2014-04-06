@@ -7,3 +7,7 @@ class BezierPath extends Component {
   List<Matrix3> path;
   BezierPath(this.offset, this.origin, this.path);
 }
+
+class Head extends Component {}
+class Eye extends Component {}
+class Mouth extends Component {}
