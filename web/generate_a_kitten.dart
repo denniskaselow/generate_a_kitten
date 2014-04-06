@@ -14,7 +14,7 @@ void main() {
 
 class Game extends GameBase {
 
-  Game() : super.noAssets('generate_a_kitten', 'canvas', 800, 600);
+  Game() : super.noAssets('generate_a_kitten', 'canvas', 500, 300);
 
   void createEntities() {
     // tail
@@ -53,23 +53,23 @@ class Game extends GameBase {
     // head
     addEntity([new Head(),
                new BezierPath(
-        new Vector2(0.0, -80.0), new Vector2(-60.0, 10.0), [
+        new Vector2(0.0, -80.0), new Vector2(-70.0, 10.0), [
           // left ear
-          new Matrix3(-60.0, 10.0, 0.0, -70.0, -40.0, 0.0, -70.0, -40.0, 0.0),
-          new Matrix3(-70.0, -40.0, 0.0, -40.0, -10.0, 0.0, -40.0, -10.0, 0.0),
+          new Matrix3(-70.0, 10.0, 0.0, -80.0, -40.0, 0.0, -80.0, -40.0, 0.0),
+          new Matrix3(-80.0, -40.0, 0.0, -50.0, -10.0, 0.0, -50.0, -10.0, 0.0),
           // upper head
-          new Matrix3(-20.0, -30.0, 0.0, 20.0, -30.0, 0.0, 40.0, -10.0, 0.0),
+          new Matrix3(-30.0, -30.0, 0.0, 30.0, -30.0, 0.0, 50.0, -10.0, 0.0),
           // right ear
-          new Matrix3(40.0, -10.0, 0.0, 70.0, -40.0, 0.0, 70.0, -40.0, 0.0),
-          new Matrix3(70.0, -40.0, 0.0, 60.0, 10.0, 0.0, 60.0, 10.0, 0.0),
+          new Matrix3(50.0, -10.0, 0.0, 80.0, -40.0, 0.0, 80.0, -40.0, 0.0),
+          new Matrix3(80.0, -40.0, 0.0, 70.0, 10.0, 0.0, 70.0, 10.0, 0.0),
           // lower head
-          new Matrix3(60.0, 120.0, 0.0, -60.0, 120.0, 0.0, -60.0, 10.0, 0.0),
+          new Matrix3(70.0, 120.0, 0.0, -70.0, 120.0, 0.0, -70.0, 10.0, 0.0),
         ])
     ]);
     // left eye
-    addEntity([new Eye(),
+    addEntity([new Eye(modX: -1.0),
                new BezierPath(
-        new Vector2(-30.0, -60.0), new Vector2(10.0, 0.0), [
+        new Vector2(-40.0, -50.0), new Vector2(10.0, 0.0), [
           new Matrix3(10.0, -20.0, 0.0, -10.0, -20.0, 0.0, -10.0, 0.0, 0.0),
           new Matrix3(-10.0, 20.0, 0.0, 10.0, 20.0, 0.0, 10.0, 0.0, 0.0),
         ])
@@ -77,7 +77,7 @@ class Game extends GameBase {
     // right eye
     addEntity([new Eye(),
                new BezierPath(
-        new Vector2(30.0, -60.0), new Vector2(10.0, 0.0), [
+        new Vector2(40.0, -50.0), new Vector2(10.0, 0.0), [
           new Matrix3(10.0, -20.0, 0.0, -10.0, -20.0, 0.0, -10.0, 0.0, 0.0),
           new Matrix3(-10.0, 20.0, 0.0, 10.0, 20.0, 0.0, 10.0, 0.0, 0.0),
        ])
@@ -104,7 +104,7 @@ class Game extends GameBase {
             new CanvasCleaningSystem(canvas),
             new BezierRenderingSystem(ctx),
 //            new DebugBezierRenderingSystem(ctx),
-            new FpsRenderingSystem(ctx)
+//            new FpsRenderingSystem(ctx)
     ];
   }
 }

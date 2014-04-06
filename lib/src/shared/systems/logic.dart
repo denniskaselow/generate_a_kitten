@@ -54,14 +54,14 @@ class EarsRandomizingSystem extends RandomizingSystem {
   void processEntity(Entity entity) {
     var bp = bpm.get(entity);
 
-    var x1 = getRandom(50, 90);
+    var x1 = getRandom(60, 100);
     var y1 = getRandom(-20, 0);
-    var x2 = getRandom(20, 70);
+    var x2 = getRandom(30, 80);
     var y2 = getRandom(-40, min(y1, -10));
 
     var x3 = getRandom(max(x2 - 45, 5), x2);
     var y3 = getRandom(-40, y2);
-    var x4 = getRandom(30, min(x1, 70));
+    var x4 = getRandom(40, min(x1, 80));
     var y4 = getRandom(-40, -15);
 
     bp.path[0].storage[0] = -x1;
@@ -87,14 +87,23 @@ class EarsRandomizingSystem extends RandomizingSystem {
 }
 
 class EyeRandomizingSystem extends RandomizingSystem {
-  double x1, x2, x3;
-  double y1, y2, y3;
+  double x0, x1, x2, x3;
+  double y0, y1, y2, y3;
+  ComponentMapper<Eye> em;
   EyeRandomizingSystem() : super(randomizeEyesEvent, [Eye]);
+
 
   @override
   void begin() {
-    x3 = getRandom(10, 20);
-    y3 = getRandom(0, 20);
+    x0 = getRandom(25, 40);
+    y0 = getRandom(-40 - (x0 - 10), -50);
+    if (random.nextBool()) {
+      x3 = getRandom(10, 20);
+      y3 = getRandom(0, 20);
+    } else {
+      x3 = 10.0;
+      y3 = 0.0;
+    }
     x1 = x3 - 10 + getRandom(5, 25);
     y1 = y3 + getRandom(-30, 0);
     x2 = x3 - 10 + getRandom(5, 25);
@@ -104,6 +113,9 @@ class EyeRandomizingSystem extends RandomizingSystem {
   @override
   void processEntity(Entity entity) {
     var bp = bpm.get(entity);
+
+    bp.offset.x = x0 * em.get(entity).modX;
+    bp.offset.y = y0;
 
     bp.origin.x = x3;
     bp.origin.y = y3;

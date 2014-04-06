@@ -9,7 +9,10 @@ class BezierPath extends Component {
 }
 
 class Head extends Component {}
-class Eye extends Component {}
+class Eye extends Component {
+  double modX;
+  Eye({this.modX: 1.0});
+}
 class Mouth extends Component {}
 class Tail extends Component {}
 class Body extends Component {

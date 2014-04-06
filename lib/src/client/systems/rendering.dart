@@ -10,7 +10,7 @@ class BezierRenderingSystem extends EntityProcessingSystem {
   void begin() {
     ctx..save()
        ..lineWidth = 3
-       ..translate(400, 300);
+       ..translate(250, 150);
   }
 
   @override

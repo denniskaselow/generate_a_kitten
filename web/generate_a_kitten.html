@@ -3,12 +3,13 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>generate_a_kitten</title>
+    <title>Generate A Kitten</title>
     <link type="text/css" rel="stylesheet" href="generate_a_kitten.css">
   </head>
   <body>
+    <h1>Generate A Kitten</h1>
     <canvas></canvas>
-    <div>
+    <section>
       <button id="randomizeKitten">Random Kitten</button>
       <fieldset>
         <legend>Head</legend>
@@ -22,7 +23,21 @@
         <button id="randomizeBody">Random Body</button>
         <button id="randomizeTail">Random Tail</button>
       </fieldset>
-    </div>
+    </section>
+    <section>
+      <h2>Feature Requests</h2>
+      <div>If you'd like some feature added, <a href="https://twitter.com/KayZGames">message me on Twitter (@KayZGames)</a></div>
+    </section>
+    <section>
+      <h2>Known Bugs</h2>
+      <ul>
+        <li>Sometimes a puppy is created instead of a kitten</li>
+      </ul>
+    </section>
+    <section>
+      <h2>Credits</h2>
+      <div>Credit goes to <a href="https://twitter.com/jephjacques">Jeph Jacques</a> for teaching me <a href="http://questionablecontent.net/view.php?comic=2673">how to draw a kitten</a></div>
+    </section>
 
     <script type="application/dart" src="generate_a_kitten.dart"></script>
     <script src="packages/browser/dart.js"></script>
