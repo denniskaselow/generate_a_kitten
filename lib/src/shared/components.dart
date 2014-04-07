@@ -13,7 +13,10 @@ class Eye extends Component {
   double modX;
   Eye({this.modX: 1.0});
 }
-class Mouth extends Component {}
+class Mouth extends Component {
+  double modX;
+  Mouth({this.modX: 1.0});
+}
 class Tail extends Component {}
 class Body extends Component {
   double modX, modY;

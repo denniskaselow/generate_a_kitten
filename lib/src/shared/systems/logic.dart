@@ -139,27 +139,37 @@ class EyeRandomizingSystem extends RandomizingSystem {
 }
 
 class MouthRandomizingSystem extends RandomizingSystem {
+  double x1, x2, x4;
+  double y1, y2, y3, y4;
+  ComponentMapper<Mouth> mm;
   MouthRandomizingSystem() : super(randomizeMouthEvent, [Mouth]);
+
+  @override
+  void begin() {
+    x1 = getRandom(20, 30);
+    y1 = getRandom(5, 15);
+    x2 = getRandom(-5, 5);
+    y2 = getRandom(5, 15);
+    y3 = getRandom(-10, 0);
+    x4 = getRandom(5, 13);
+    y4 = getRandom(-13, y3 - 3);
+  }
 
   @override
   void processEntity(Entity entity) {
     var bp = bpm.get(entity);
+    var modX = mm.get(entity).modX;
 
-    // top
-    var x1 = getRandom(20, 40);
-    var y1 = getRandom(-5, 20);
-    var x2 = getRandom(-5, 5);
-    var y2 = getRandom(-5, 20);
-    bp.path[0].storage[0] = -x1;
+    bp.path[0].storage[0] = -x1 * modX;
     bp.path[0].storage[1] = y1;
-    bp.path[0].storage[3] = -x2;
+    bp.path[0].storage[3] = -x2 * modX;
     bp.path[0].storage[4] = y2;
-    bp.path[0].storage[7] = getRandom(-20, -5);
 
-    bp.path[1].storage[0] = x2;
-    bp.path[1].storage[1] = y2;
-    bp.path[1].storage[3] = x1;
-    bp.path[1].storage[4] = y1;
+    bp.path[0].storage[7] = y3;
+    bp.path[1].storage[1] = y3;
+
+    bp.path[1].storage[6] = -x4 * modX;
+    bp.path[1].storage[7] = y4;
   }
 }
 

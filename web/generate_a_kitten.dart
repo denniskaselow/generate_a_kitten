@@ -85,9 +85,16 @@ class Game extends GameBase {
     // mouth
     addEntity([new Mouth(),
                new BezierPath(
-        new Vector2(0.0, -20.0), new Vector2(-15.0, -10.0), [
-          new Matrix3(-30.0, 15.0, 0.0, 0.0, 15.0, 0.0, 0.0, -10.0, 0.0),
-          new Matrix3(0.0, 15.0, 0.0, 30.0, 15.0, 0.0, 15.0, -10.0, 0.0),
+        new Vector2(0.0, -20.0), new Vector2(-15.0, 0.0), [
+          new Matrix3(-25.0, 10.0, 0.0, 0.0, 10.0, 0.0, 0.0, -5.0, 0.0),
+          new Matrix3(0.0, -5.0, 0.0, -5.0, -10.0, 0.0, -5.0, -10.0, 0.0),
+       ])
+    ]);
+    addEntity([new Mouth(modX: -1.0),
+               new BezierPath(
+        new Vector2(0.0, -20.0), new Vector2(15.0, 0.0), [
+          new Matrix3(25.0, 10.0, 0.0, 0.0, 10.0, 0.0, 0.0, -5.0, 0.0),
+          new Matrix3(0.0, -5.0, 0.0, 5.0, -10.0, 0.0, 5.0, -10.0, 0.0),
        ])
     ]);
   }
