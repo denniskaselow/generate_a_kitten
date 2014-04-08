@@ -4,6 +4,8 @@ import 'package:event_bus/event_bus.dart';
 import 'dart:math';
 
 import 'package:gamedev_helpers/gamedev_helpers_shared.dart';
+import 'package:tweenengine/tweenengine.dart';
+export 'package:tweenengine/tweenengine.dart' hide Timeline;
 
 part 'src/shared/components.dart';
 
@@ -12,6 +14,7 @@ part 'src/shared/systems/logic.dart';
 
 Random random = new Random();
 EventBus eventBus = new EventBus();
+TweenManager myManager = new TweenManager();
 
 var randomizeHeadEvent = new EventType<RandomizeHead>();
 var randomizeEarsEvent = new EventType<RandomizeEars>();

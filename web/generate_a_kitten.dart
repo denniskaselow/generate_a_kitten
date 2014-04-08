@@ -9,6 +9,7 @@ import 'package:generate_a_kitten/client.dart';
 import 'dart:mirrors';
 
 void main() {
+  Tween.combinedAttributesLimit = 9;
   new Game().start();
 }
 
@@ -23,7 +24,7 @@ class Game extends GameBase {
         new Vector2(0.0, -25.0), new Vector2(40.0, 40.0), [
           new Matrix3(60.0, 15.0, 0.0, 120.0, -10.0, 0.0, 110.0, 35.0, 0.0),
           new Matrix3(100.0, 80.0, 0.0, 120.0, 75.0, 0.0, 130.0, 45.0, 0.0),
-          new Matrix3(140.0, 15.0, 0.0, 160.0, -65.0, 0.0, 40.0, 15.0, 0.0),
+          new Matrix3(140.0, 15.0, 0.0, 160.0, -65.0, 0.0, 40.0, 15.0, 0.0)
         ])
     ]);
     // body behind
@@ -35,7 +36,7 @@ class Game extends GameBase {
           // lower body
           new Matrix3(-5.0, 50.0, 0.0, 10.0, 50.0, 0.0, 5.0, 50.0, 0.0),
           // right leg
-          new Matrix3(5.0, 120.0, 0.0, 30.0, 140.0, 0.0, 30.0, 0.0, 0.0),
+          new Matrix3(5.0, 120.0, 0.0, 30.0, 140.0, 0.0, 30.0, 0.0, 0.0)
         ])
     ]);
     // body front
@@ -47,7 +48,7 @@ class Game extends GameBase {
           // lower body
           new Matrix3(-20.0, 70.0, 0.0, 20.0, 70.0, 0.0, 20.0, 70.0, 0.0),
           // right leg
-          new Matrix3(20.0, 140.0, 0.0, 55.0, 160.0, 0.0, 40.0, -10.0, 0.0),
+          new Matrix3(20.0, 140.0, 0.0, 55.0, 160.0, 0.0, 40.0, -10.0, 0.0)
         ])
     ]);
     // head
@@ -63,7 +64,7 @@ class Game extends GameBase {
           new Matrix3(50.0, -10.0, 0.0, 80.0, -40.0, 0.0, 80.0, -40.0, 0.0),
           new Matrix3(80.0, -40.0, 0.0, 70.0, 10.0, 0.0, 70.0, 10.0, 0.0),
           // lower head
-          new Matrix3(70.0, 120.0, 0.0, -70.0, 120.0, 0.0, -70.0, 10.0, 0.0),
+          new Matrix3(70.0, 120.0, 0.0, -70.0, 120.0, 0.0, -70.0, 10.0, 0.0)
         ])
     ]);
     // left eye
@@ -71,7 +72,7 @@ class Game extends GameBase {
                new BezierPath(
         new Vector2(-40.0, -50.0), new Vector2(10.0, 0.0), [
           new Matrix3(10.0, -20.0, 0.0, -10.0, -20.0, 0.0, -10.0, 0.0, 0.0),
-          new Matrix3(-10.0, 20.0, 0.0, 10.0, 20.0, 0.0, 10.0, 0.0, 0.0),
+          new Matrix3(-10.0, 20.0, 0.0, 10.0, 20.0, 0.0, 10.0, 0.0, 0.0)
         ])
     ]);
     // right eye
@@ -79,7 +80,7 @@ class Game extends GameBase {
                new BezierPath(
         new Vector2(40.0, -50.0), new Vector2(10.0, 0.0), [
           new Matrix3(10.0, -20.0, 0.0, -10.0, -20.0, 0.0, -10.0, 0.0, 0.0),
-          new Matrix3(-10.0, 20.0, 0.0, 10.0, 20.0, 0.0, 10.0, 0.0, 0.0),
+          new Matrix3(-10.0, 20.0, 0.0, 10.0, 20.0, 0.0, 10.0, 0.0, 0.0)
        ])
     ]);
     // mouth
@@ -87,14 +88,14 @@ class Game extends GameBase {
                new BezierPath(
         new Vector2(0.0, -20.0), new Vector2(-15.0, 0.0), [
           new Matrix3(-25.0, 10.0, 0.0, 0.0, 10.0, 0.0, 0.0, -5.0, 0.0),
-          new Matrix3(0.0, -5.0, 0.0, -5.0, -10.0, 0.0, -5.0, -10.0, 0.0),
+          new Matrix3(0.0, -5.0, 0.0, -5.0, -10.0, 0.0, -5.0, -10.0, 0.0)
        ])
     ]);
     addEntity([new Mouth(modX: -1.0),
                new BezierPath(
         new Vector2(0.0, -20.0), new Vector2(15.0, 0.0), [
           new Matrix3(25.0, 10.0, 0.0, 0.0, 10.0, 0.0, 0.0, -5.0, 0.0),
-          new Matrix3(0.0, -5.0, 0.0, 5.0, -10.0, 0.0, 5.0, -10.0, 0.0),
+          new Matrix3(0.0, -5.0, 0.0, 5.0, -10.0, 0.0, 5.0, -10.0, 0.0)
        ])
     ]);
   }
@@ -109,6 +110,7 @@ class Game extends GameBase {
             new BodyRandomizingSystem(),
             new TailRandomizingSystem(),
             new CanvasCleaningSystem(canvas),
+            new TweeningSystem(),
             new BezierRenderingSystem(ctx),
 //            new DebugBezierRenderingSystem(ctx),
 //            new FpsRenderingSystem(ctx)

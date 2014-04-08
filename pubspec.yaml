@@ -10,3 +10,4 @@ dependencies:
 #    path: ../gamedev_helpers
   hop: any
   event_bus: any
+  tweenengine: any
