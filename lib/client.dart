@@ -3,6 +3,7 @@ library client;
 import 'dart:html';
 export 'dart:html';
 import 'dart:math';
+import 'dart:js' as js;
 
 import 'package:generate_a_kitten/shared.dart';
 export 'package:generate_a_kitten/shared.dart';

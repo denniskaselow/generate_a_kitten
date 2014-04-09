@@ -11,3 +11,6 @@ dependencies:
   hop: any
   event_bus: any
   tweenengine: any
+transformers:
+- $dart2js:
+    minify: true
