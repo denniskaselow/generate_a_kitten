@@ -3,12 +3,10 @@ part of client;
 
 class ButtonListeningSystem extends VoidEntitySystem {
   CanvasElement canvas;
-  js.JsObject gaq;
   ButtonListeningSystem(this.canvas);
 
   @override
   void initialize() {
-    gaq = js.context['_gaq'];
     querySelector('#randomizeEars').onClick.listen((_) {
       trackRandomize('Ears');
       eventBus.fire(randomizeEarsEvent, null);
@@ -46,7 +44,7 @@ class ButtonListeningSystem extends VoidEntitySystem {
       eventBus.fire(randomizeBodyEvent, null);
     });
     querySelector('#saveKitten').onClick.listen((_) {
-      gaq.callMethod('push', [new js.JsArray.from(['_trackEvent', 'Kitten', 'Save', 'PNG'])]);
+      eventBus.fire(analyticsTrackEvent, new AnalyticsTrackEvent('Kitten', 'Save', 'PNG'));
       var trimmedCanvas = cq(cq(canvas).copy());
       var rect = trimmedCanvas.trim(color: '#FFFFFF');
       var dataUrl = trimmedCanvas.canvas.toDataUrl("image/png");
@@ -55,7 +53,7 @@ class ButtonListeningSystem extends VoidEntitySystem {
   }
 
   void trackRandomize(String type) {
-    gaq.callMethod('push', [new js.JsArray.from(['_trackEvent', 'Kitten', 'Randomize', type])]);
+    eventBus.fire(analyticsTrackEvent, new AnalyticsTrackEvent('Kitten', 'Randomize', type));
   }
 
   @override

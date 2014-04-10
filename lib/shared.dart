@@ -12,16 +12,15 @@ part 'src/shared/components.dart';
 //part 'src/shared/systems/name.dart';
 part 'src/shared/systems/logic.dart';
 
-Random random = new Random();
-EventBus eventBus = new EventBus();
-TweenManager myManager = new TweenManager();
+final random = new Random();
+final myManager = new TweenManager();
 
-var randomizeHeadEvent = new EventType<RandomizeHead>();
-var randomizeEarsEvent = new EventType<RandomizeEars>();
-var randomizeEyesEvent = new EventType<RandomizeEyes>();
-var randomizeMouthEvent = new EventType<RandomizeMouth>();
-var randomizeTailEvent = new EventType<RandomizeTail>();
-var randomizeBodyEvent = new EventType<RandomizeBody>();
+final randomizeHeadEvent = new EventType<RandomizeHead>();
+final randomizeEarsEvent = new EventType<RandomizeEars>();
+final randomizeEyesEvent = new EventType<RandomizeEyes>();
+final randomizeMouthEvent = new EventType<RandomizeMouth>();
+final randomizeTailEvent = new EventType<RandomizeTail>();
+final randomizeBodyEvent = new EventType<RandomizeBody>();
 
 class RandomizeHead {}
 class RandomizeEars {}
