@@ -114,7 +114,7 @@ class Game extends GameBase {
             new BezierRenderingSystem(ctx),
 //            new DebugBezierRenderingSystem(ctx),
 //            new FpsRenderingSystem(ctx)
-            new AnalyticsSystem(AnalyticsSystem.ITCHIO)
+            new AnalyticsSystem(AnalyticsSystem.ITCHIO, 'Kitten')
     ];
   }
 }

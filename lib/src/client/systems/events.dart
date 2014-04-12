@@ -44,7 +44,7 @@ class ButtonListeningSystem extends VoidEntitySystem {
       eventBus.fire(randomizeBodyEvent, null);
     });
     querySelector('#saveKitten').onClick.listen((_) {
-      eventBus.fire(analyticsTrackEvent, new AnalyticsTrackEvent('Kitten', 'Save', 'PNG'));
+      eventBus.fire(analyticsTrackEvent, new AnalyticsTrackEvent('Save', 'PNG'));
       var trimmedCanvas = cq(cq(canvas).copy());
       var rect = trimmedCanvas.trim(color: '#FFFFFF');
       var dataUrl = trimmedCanvas.canvas.toDataUrl("image/png");
@@ -53,7 +53,7 @@ class ButtonListeningSystem extends VoidEntitySystem {
   }
 
   void trackRandomize(String type) {
-    eventBus.fire(analyticsTrackEvent, new AnalyticsTrackEvent('Kitten', 'Randomize', type));
+    eventBus.fire(analyticsTrackEvent, new AnalyticsTrackEvent('Randomize', type));
   }
 
   @override
