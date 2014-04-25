@@ -1,4 +1,4 @@
-Gnerate A Kitten
+Generate A Kitten
 =================
 
 This is a toy project I started, because I realised that kittens are just a bunch of bezier curves.
