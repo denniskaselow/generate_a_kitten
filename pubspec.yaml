@@ -7,7 +7,6 @@ dependencies:
   gamedev_helpers:
     git: https://github.com/denniskaselow/gamedev_helpers
 #    path: ../gamedev_helpers
-  hop: any
   tweenengine: any
 transformers:
 - $dart2js:
