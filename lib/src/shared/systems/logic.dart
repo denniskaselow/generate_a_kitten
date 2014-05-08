@@ -107,19 +107,18 @@ class EyeRandomizingSystem extends RandomizingSystem {
     x0 = getRandom(25, 40);
     y0 = getRandom(-40 - (x0 - 10), -50);
     if (random.nextBool()) {
-      x3 = getRandom(10, 20);
-      y3 = getRandom(0, 20);
+      x3 = getRandom(10, 18);
+      y3 = getRandom(0, 13);
       useCutenessBug = true;
     } else {
       x3 = 10.0;
       y3 = 0.0;
       useCutenessBug = false;
     }
-    x1 = x3 - 10 + getRandom(5, 25);
-    y1 = y3 + getRandom(-30, 0);
-    x2 = x3 - 10 + getRandom(5, 25);
-    y2 = y3 + getRandom(-30, 0);
-//    useCutenessBug = random.nextBool();
+    x1 = x3 - 10 + getRandom(5, 18);
+    y1 = y3 + getRandom(-20, 0);
+    x2 = x3 - 10 + getRandom(5, 18);
+    y2 = y3 + getRandom(-20, 0);
   }
 
   @override
@@ -131,6 +130,7 @@ class EyeRandomizingSystem extends RandomizingSystem {
     tweenPath(bp, 0, [x1, y1, 0.0, -x1, y1, 0.0, useCutenessBug ? bp.path[0].storage[6] : -x3, useCutenessBug ? bp.path[0].storage[7] : y3, 0.0]);
     tweenPath(bp, 1, [-x2, -y2, 0.0, x2, -y2, 0.0, x3, y3, 0.0]);
   }
+
 }
 
 class MouthRandomizingSystem extends RandomizingSystem {
@@ -223,5 +223,43 @@ class TailRandomizingSystem extends RandomizingSystem {
     tweenPath(bp, 1, [bp06 + (bp06 - bp03) * lengthMod, bp07 + (bp07 - bp04) * lengthMod, 0.0, bp13, bp14, 0.0, bp16, bp17, 0.0]);
     tweenPath(bp, 2, [bp16 + (bp16 - bp13) * lengthMod, bp17 + (bp17 - bp14) * lengthMod, 0.0, bp23, bp24, 0.0, bp.path[2].storage[6].abs() * xMod, bp.path[2].storage[7], 0.0]);
     tweenOrigin(bp, bp.origin.x.abs() * xMod, bp.origin.y);
+  }
+}
+
+class MonocleUpdatingSystem extends EntityProcessingSystem {
+  ComponentMapper<BezierPath> bpm;
+  TagManager tm;
+  MonocleUpdatingSystem() : super(Aspect.getAspectForAllOf([Monocle, BezierPath]));
+
+  @override
+  void processEntity(Entity entity) {
+    var eye = tm.getEntity(TAG_RIGHT_EYE);
+    var head = tm.getEntity(TAG_HEAD);
+    var bpEye = bpm.get(eye);
+    var bpHead = bpm.get(head);
+    var bp = bpm.get(entity);
+
+    var diffX = bp.offset.x - bpEye.offset.x;
+    var diffY = bp.offset.y - bpEye.offset.y;
+
+    var lowerHeadStartY = bpHead.path[4].storage[7];
+    var lowerHeadStartControlPointY = bpHead.path[5].storage[1];
+    var connectionStartY = lowerHeadStartControlPointY - 0.6 * (lowerHeadStartControlPointY - lowerHeadStartY);
+
+    var lowerHeadEndControlPointY = bpHead.path[5].storage[4];
+    var lowerHeadEndY = bpHead.path[5].storage[7];
+
+    var connectionMiddleY = lowerHeadEndControlPointY - 0.6 * (lowerHeadEndControlPointY - lowerHeadStartControlPointY);
+    var connectionEndY = lowerHeadEndY - 0.6 * (lowerHeadEndY - lowerHeadStartControlPointY);
+
+    var lowerHeadY1 = connectionMiddleY - 0.6 * (connectionMiddleY - connectionStartY);
+    var lowerHeadY2 = connectionEndY - 0.6 * (connectionEndY - connectionMiddleY);
+    var lowerHeadY = lowerHeadY2 - 0.6 * (lowerHeadY2 - lowerHeadY1);
+
+    bp.offset.x = bpEye.offset.x;
+    bp.offset.t = bpEye.offset.y;
+    bp.path[3].storage[3] = bp.path[3].storage[3] + diffX;
+    bp.path[3].storage[6] = bp.path[3].storage[6] + diffX;
+    bp.path[3].storage[7] = lowerHeadY + bpHead.offset.y - bp.offset.y;
   }
 }

@@ -47,6 +47,14 @@ class BezierPath extends Component implements Tweenable {
   }
 }
 
+class FillStyle extends Component {
+  int hue;
+  num saturation;
+  num lightness;
+  num alpha;
+  FillStyle({this.hue: 0, this.saturation: 0, this.lightness: 100, this.alpha: 1});
+}
+
 class Head extends Component {}
 class Eye extends Component {
   double modX;
@@ -61,3 +69,5 @@ class Body extends Component {
   double modX, modY;
   Body({this.modX: 1.0, this.modY: 1.0});
 }
+class Accessory extends Component {}
+class Monocle extends Component {}

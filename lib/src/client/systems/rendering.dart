@@ -4,7 +4,8 @@ part of client;
 class BezierRenderingSystem extends EntityProcessingSystem {
   CanvasRenderingContext2D ctx;
   ComponentMapper<BezierPath> bpm;
-  BezierRenderingSystem(this.ctx) : super(Aspect.getAspectForAllOf([BezierPath]));
+  ComponentMapper<FillStyle> fsm;
+  BezierRenderingSystem(this.ctx, Aspect aspect) : super(aspect);
 
   @override
   void begin() {
@@ -16,7 +17,9 @@ class BezierRenderingSystem extends EntityProcessingSystem {
   @override
   void processEntity(Entity entity) {
     var bp = bpm.get(entity);
+    var fs = fsm.get(entity);
     ctx..save()
+       ..setFillColorHsl(fs.hue, fs.saturation, fs.lightness, fs.alpha)
        ..translate(bp.offset.x, bp.offset.y)
        ..beginPath()
        ..moveTo(bp.origin.x, bp.origin.y);
@@ -37,8 +40,16 @@ class BezierRenderingSystem extends EntityProcessingSystem {
   }
 }
 
+class BodyPartRenderingSystem extends BezierRenderingSystem {
+  BodyPartRenderingSystem(CanvasRenderingContext2D ctx) : super(ctx, Aspect.getAspectForAllOf([BezierPath, FillStyle]).exclude([Accessory]));
+}
+
+class AccessoryRenderingSystem extends BezierRenderingSystem {
+  AccessoryRenderingSystem(CanvasRenderingContext2D ctx) : super(ctx, Aspect.getAspectForAllOf([BezierPath, FillStyle, Accessory]));
+}
+
 class DebugBezierRenderingSystem extends BezierRenderingSystem {
-  DebugBezierRenderingSystem(CanvasRenderingContext2D ctx) : super(ctx);
+  DebugBezierRenderingSystem(CanvasRenderingContext2D ctx) : super(ctx, Aspect.getAspectForAllOf([BezierPath, FillStyle]));
 
   @override
   void processEntity(Entity entity) {

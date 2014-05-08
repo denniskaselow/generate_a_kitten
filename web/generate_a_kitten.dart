@@ -4,7 +4,8 @@ import 'package:generate_a_kitten/client.dart';
                              RandomizingSystem, EarsRandomizingSystem,
                              HeadRandomizingSystem, EyeRandomizingSystem,
                              MouthRandomizingSystem, TailRandomizingSystem,
-                             BodyRandomizingSystem
+                             BodyRandomizingSystem, AccessoryRenderingSystem,
+                             BodyPartRenderingSystem, MonocleUpdatingSystem
                             ])
 import 'dart:mirrors';
 
@@ -18,8 +19,11 @@ class Game extends GameBase {
   Game() : super.noAssets('generate_a_kitten', 'canvas', 500, 300);
 
   void createEntities() {
+    var tm = world.getManager(TagManager);
+    Entity e;
     // tail
     addEntity([new Tail(),
+               new FillStyle(),
                new BezierPath(
         new Vector2(0.0, -25.0), new Vector2(40.0, 40.0), [
           new Matrix3(60.0, 15.0, 0.0, 120.0, -10.0, 0.0, 110.0, 35.0, 0.0),
@@ -29,6 +33,7 @@ class Game extends GameBase {
     ]);
     // body behind
     addEntity([new Body(modX: 0.45, modY: 0.85),
+               new FillStyle(),
                new BezierPath(
         new Vector2(0.0, -15.0), new Vector2(-30.0, 0.0), [
           // left leg
@@ -41,6 +46,7 @@ class Game extends GameBase {
     ]);
     // body front
     addEntity([new Body(),
+               new FillStyle(),
                new BezierPath(
         new Vector2(0.0, -10.0), new Vector2(-40.0, -10.0), [
           // left leg
@@ -52,7 +58,8 @@ class Game extends GameBase {
         ])
     ]);
     // head
-    addEntity([new Head(),
+    e = addEntity([new Head(),
+               new FillStyle(),
                new BezierPath(
         new Vector2(0.0, -80.0), new Vector2(-70.0, 10.0), [
           // left ear
@@ -67,8 +74,10 @@ class Game extends GameBase {
           new Matrix3(70.0, 120.0, 0.0, -70.0, 120.0, 0.0, -70.0, 10.0, 0.0)
         ])
     ]);
+    tm.register(e, TAG_HEAD);
     // left eye
     addEntity([new Eye(modX: -1.0),
+               new FillStyle(),
                new BezierPath(
         new Vector2(-40.0, -50.0), new Vector2(10.0, 0.0), [
           new Matrix3(10.0, -20.0, 0.0, -10.0, -20.0, 0.0, -10.0, 0.0, 0.0),
@@ -76,15 +85,29 @@ class Game extends GameBase {
         ])
     ]);
     // right eye
-    addEntity([new Eye(),
+    e = addEntity([new Eye(),
+               new FillStyle(),
                new BezierPath(
         new Vector2(40.0, -50.0), new Vector2(10.0, 0.0), [
           new Matrix3(10.0, -20.0, 0.0, -10.0, -20.0, 0.0, -10.0, 0.0, 0.0),
           new Matrix3(-10.0, 20.0, 0.0, 10.0, 20.0, 0.0, 10.0, 0.0, 0.0)
        ])
     ]);
+    tm.register(e, TAG_RIGHT_EYE);
+    // monocle
+    addEntity([new Monocle(),
+               new FillStyle(alpha: 0),
+               new BezierPath(
+        new Vector2(40.0, -50.0), new Vector2(18.0, 0.0), [
+          new Matrix3(18.0, -25.0, 0.0, -18.0, -25.0, 0.0, -18.0, 0.0, 0.0),
+          new Matrix3(-18.0, 25.0, 0.0, 18.0, 25.0, 0.0, 18.0, 0.0, 0.0),
+          new Matrix3(18.0, 18.0, 0.0, 10.0, 18.0, 0.0, 10.0, 18.0, 0.0),
+          new Matrix3(10.0, 125.0, 0.0, -20.0, 125.0, 0.0, -20.0, 60.0, 0.0),
+       ])
+    ]);
     // mouth
     addEntity([new Mouth(),
+               new FillStyle(),
                new BezierPath(
         new Vector2(0.0, -20.0), new Vector2(-15.0, 0.0), [
           new Matrix3(-25.0, 10.0, 0.0, 0.0, 10.0, 0.0, 0.0, -5.0, 0.0),
@@ -92,6 +115,7 @@ class Game extends GameBase {
        ])
     ]);
     addEntity([new Mouth(modX: -1.0),
+               new FillStyle(),
                new BezierPath(
         new Vector2(0.0, -20.0), new Vector2(15.0, 0.0), [
           new Matrix3(25.0, 10.0, 0.0, 0.0, 10.0, 0.0, 0.0, -5.0, 0.0),
@@ -109,12 +133,18 @@ class Game extends GameBase {
             new MouthRandomizingSystem(),
             new BodyRandomizingSystem(),
             new TailRandomizingSystem(),
+            new MonocleUpdatingSystem(),
             new CanvasCleaningSystem(canvas),
             new TweeningSystem(),
-            new BezierRenderingSystem(ctx),
+            new BodyPartRenderingSystem(ctx),
+            new AccessoryRenderingSystem(ctx),
 //            new DebugBezierRenderingSystem(ctx),
 //            new FpsRenderingSystem(ctx)
             new AnalyticsSystem(AnalyticsSystem.ITCHIO, 'Kitten')
     ];
+  }
+
+  Future onInit() {
+    world.addManager(new TagManager());
   }
 }
