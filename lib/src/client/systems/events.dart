@@ -43,6 +43,22 @@ class ButtonListeningSystem extends VoidEntitySystem {
       trackRandomize('Body');
       eventBus.fire(randomizeBodyEvent, null);
     });
+    querySelector('#showMonocle').onClick.listen((_) {
+      var checked = (querySelector('#showMonocle') as CheckboxInputElement).checked;
+      if (checked) {
+        eventBus.fire(analyticsTrackEvent, new AnalyticsTrackEvent('Show Accessory', "Monocle"));
+      } else {
+        eventBus.fire(analyticsTrackEvent, new AnalyticsTrackEvent('Hide Accessory', "Monocle"));
+      }
+    });
+    querySelector('#showControlPoints').onClick.listen((_) {
+      var checked = (querySelector('#showControlPoints') as CheckboxInputElement).checked;
+      if (checked) {
+        eventBus.fire(analyticsTrackEvent, new AnalyticsTrackEvent('Show Debug', "Control Points"));
+      } else {
+        eventBus.fire(analyticsTrackEvent, new AnalyticsTrackEvent('Hide Debug', "Control Points"));
+      }
+    });
     querySelector('#saveKitten').onClick.listen((_) {
       eventBus.fire(analyticsTrackEvent, new AnalyticsTrackEvent('Save', 'PNG'));
       var trimmedCanvas = cq(cq(canvas).copy());

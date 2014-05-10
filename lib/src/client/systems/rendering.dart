@@ -41,14 +41,19 @@ class BezierRenderingSystem extends EntityProcessingSystem {
 }
 
 class BodyPartRenderingSystem extends BezierRenderingSystem {
-  BodyPartRenderingSystem(CanvasRenderingContext2D ctx) : super(ctx, Aspect.getAspectForAllOf([BezierPath, FillStyle]).exclude([Accessory]));
+  BodyPartRenderingSystem(CanvasRenderingContext2D ctx) : super(ctx, Aspect.getAspectForAllOf([BezierPath, FillStyle]).exclude([Monocle]));
 }
 
-class AccessoryRenderingSystem extends BezierRenderingSystem {
-  AccessoryRenderingSystem(CanvasRenderingContext2D ctx) : super(ctx, Aspect.getAspectForAllOf([BezierPath, FillStyle, Accessory]));
+class MonocleRenderingSystem extends BezierRenderingSystem {
+  CheckboxInputElement showMonocle = querySelector('#showMonocle');
+  MonocleRenderingSystem(CanvasRenderingContext2D ctx) : super(ctx, Aspect.getAspectForAllOf([BezierPath, FillStyle, Monocle]));
+
+  @override
+  bool checkProcessing() => showMonocle.checked;
 }
 
 class DebugBezierRenderingSystem extends BezierRenderingSystem {
+  CheckboxInputElement showControlPoints = querySelector('#showControlPoints');
   DebugBezierRenderingSystem(CanvasRenderingContext2D ctx) : super(ctx, Aspect.getAspectForAllOf([BezierPath, FillStyle]));
 
   @override
@@ -74,5 +79,5 @@ class DebugBezierRenderingSystem extends BezierRenderingSystem {
   }
 
   @override
-  bool checkProcessing() => (querySelector('#showControlPoints') as CheckboxInputElement).checked;
+  bool checkProcessing() => showControlPoints.checked;
 }

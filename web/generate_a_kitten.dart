@@ -4,7 +4,7 @@ import 'package:generate_a_kitten/client.dart';
                              RandomizingSystem, EarsRandomizingSystem,
                              HeadRandomizingSystem, EyeRandomizingSystem,
                              MouthRandomizingSystem, TailRandomizingSystem,
-                             BodyRandomizingSystem, AccessoryRenderingSystem,
+                             BodyRandomizingSystem, MonocleRenderingSystem,
                              BodyPartRenderingSystem, MonocleUpdatingSystem
                             ])
 import 'dart:mirrors';
@@ -137,7 +137,7 @@ class Game extends GameBase {
             new CanvasCleaningSystem(canvas),
             new TweeningSystem(),
             new BodyPartRenderingSystem(ctx),
-            new AccessoryRenderingSystem(ctx),
+            new MonocleRenderingSystem(ctx),
             new DebugBezierRenderingSystem(ctx),
 //            new FpsRenderingSystem(ctx)
             new AnalyticsSystem(AnalyticsSystem.ITCHIO, 'Kitten')
