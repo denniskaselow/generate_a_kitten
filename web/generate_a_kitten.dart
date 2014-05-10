@@ -138,7 +138,7 @@ class Game extends GameBase {
             new TweeningSystem(),
             new BodyPartRenderingSystem(ctx),
             new AccessoryRenderingSystem(ctx),
-//            new DebugBezierRenderingSystem(ctx),
+            new DebugBezierRenderingSystem(ctx),
 //            new FpsRenderingSystem(ctx)
             new AnalyticsSystem(AnalyticsSystem.ITCHIO, 'Kitten')
     ];

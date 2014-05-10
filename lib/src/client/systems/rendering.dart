@@ -72,4 +72,7 @@ class DebugBezierRenderingSystem extends BezierRenderingSystem {
        ..closePath()
        ..restore();
   }
+
+  @override
+  bool checkProcessing() => (querySelector('#showControlPoints') as CheckboxInputElement).checked;
 }
