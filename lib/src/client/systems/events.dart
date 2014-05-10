@@ -43,6 +43,10 @@ class ButtonListeningSystem extends VoidEntitySystem {
       trackRandomize('Body');
       eventBus.fire(randomizeBodyEvent, null);
     });
+    querySelector('#shuffleText').onClick.listen((_) {
+      eventBus.fire(analyticsTrackEvent, new AnalyticsTrackEvent('Shuffle', 'Text'));
+      eventBus.fire(shuffleTextEvent, null);
+    });
     querySelector('#showMonocle').onClick.listen((_) {
       var checked = (querySelector('#showMonocle') as CheckboxInputElement).checked;
       if (checked) {
@@ -57,6 +61,17 @@ class ButtonListeningSystem extends VoidEntitySystem {
         eventBus.fire(analyticsTrackEvent, new AnalyticsTrackEvent('Show Debug', "Control Points"));
       } else {
         eventBus.fire(analyticsTrackEvent, new AnalyticsTrackEvent('Hide Debug', "Control Points"));
+      }
+    });
+    var ottification = querySelector('#ottification');
+    ottification.onClick.listen((_) {
+      var checked = (ottification as CheckboxInputElement).checked;
+      if (checked) {
+        eventBus.fire(analyticsTrackEvent, new AnalyticsTrackEvent('Activate Theme', "OTTification"));
+        querySelectorAll('.ott').style.display = 'inline';
+      } else {
+        eventBus.fire(analyticsTrackEvent, new AnalyticsTrackEvent('Activate Theme', "OTTification"));
+        querySelectorAll('.ott').style.display = 'none';
       }
     });
     querySelector('#saveKitten').onClick.listen((_) {

@@ -71,3 +71,45 @@ class Body extends Component {
 }
 class Accessory extends Component {}
 class Monocle extends Component {}
+
+class Word extends Component implements Tweenable {
+  static const POSITION = 0;
+  static const ANGLE = 1;
+  String value;
+  double baseX, baseY;
+  double x, y;
+  double angle;
+  Word(this.value, num x, num y, {this.angle: 0.0})
+      : this.baseX = x.toDouble(),
+        this.baseY = y.toDouble(),
+        this.x = x.toDouble(),
+        this.y = y.toDouble();
+
+  @override
+  int getTweenableValues(int tweenType, List<num> returnValues) {
+    switch (tweenType) {
+      case POSITION:
+        returnValues[0] = x;
+        returnValues[1] = y;
+        return 2;
+      case ANGLE:
+        returnValues[0] = angle;
+        return 1;
+      default:
+        return 0;
+    }
+  }
+
+  @override
+  void setTweenableValues(int tweenType, List<num> newValues) {
+      switch (tweenType) {
+        case POSITION:
+          x = newValues[0];
+          y = newValues[1];
+          break;
+        case ANGLE:
+          angle = newValues[0];
+          break;
+      }
+  }
+}

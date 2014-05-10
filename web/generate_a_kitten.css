@@ -1,3 +1,8 @@
+@font-face {
+  font-family: 'XKCD';
+  src: url('xkcd-Regular.woff');
+}
+
 body {
   text-align: center;
 }
@@ -11,4 +16,16 @@ ul {
 fieldset {
   width: 500px;
   margin: auto;
+}
+
+fieldset > fieldset {
+  width: 400px;
+}
+
+.xkcd {
+  font-family: 'XKCD';
+}
+
+.ott {
+  display: none;
 }

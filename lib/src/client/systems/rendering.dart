@@ -90,3 +90,47 @@ class DebugBezierRenderingSystem extends BezierRenderingSystem {
   @override
   bool checkProcessing() => showControlPoints.checked;
 }
+
+class OttificationSystem extends EntityProcessingSystem {
+  CheckboxInputElement ottification = querySelector('#ottification');
+  CheckboxInputElement noOttText = querySelector('#noOttText');
+  ComponentMapper<Word> wm;
+  CanvasElement xkcdCanvas;
+  CanvasRenderingContext2D ctx;
+  OttificationSystem(CanvasElement canvas)
+      : xkcdCanvas = new CanvasElement(width: canvas.width, height: canvas.height),
+        ctx = canvas.context2D,
+        super(Aspect.getAspectForAllOf([Word]));
+
+  @override
+  void initialize() {
+    xkcdCanvas.context2D..textBaseline = 'top'
+                        ..font = '30px XKCD';
+  }
+
+  @override
+  void begin() {
+    xkcdCanvas.context2D.clearRect(0, 0, xkcdCanvas.width, xkcdCanvas.height);
+  }
+
+
+  @override
+  void processEntity(Entity entity) {
+    var w = wm.get(entity);
+    var wordWith = xkcdCanvas.context2D.measureText(w.value).width;
+    xkcdCanvas.context2D..save()
+                        ..translate(w.x, w.y)
+                        ..rotate(-w.angle)
+                        ..translate(- wordWith ~/ 2, 0.0)
+                        ..fillText(w.value, 0, 0)
+                        ..restore();
+  }
+
+  @override
+  void end() {
+    ctx.drawImage(xkcdCanvas, 0, 0);
+  }
+
+  @override
+  bool checkProcessing() => ottification.checked && !noOttText.checked;
+}

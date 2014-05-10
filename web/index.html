@@ -29,6 +29,16 @@
         <label><input type="checkbox" id="showMonocle" />Monocle</label>
       </fieldset>
       <fieldset>
+        <legend>Themes</legend>
+        <label class="xkcd"><input type="checkbox" id="ottification" />OTTification</label>
+      </fieldset>
+      <fieldset class="ott">
+        <legend>Text</legend>
+        <label class="xkcd"><input type="radio" name="ott" id="noOttText" />None</label>
+        <label class="xkcd"><input type="radio" name="ott" id="grapevine" checked="checked" />Molpy Molpy</label>
+        <button id="shuffleText">Shuffle</button>
+      </fieldset>
+      <fieldset>
         <legend>Debug</legend>
         <label><input type="checkbox" id="showControlPoints" />Show control points</label>
       </fieldset>
@@ -46,7 +56,10 @@
     </section>
     <section>
       <h2>Credits</h2>
-      <div>Credit goes to <a href="https://twitter.com/jephjacques">Jeph Jacques</a> for teaching me <a href="http://questionablecontent.net/view.php?comic=2673">how to draw a kitten</a></div>
+      <ul>
+        <li><a href="https://twitter.com/jephjacques">Jeph Jacques</a> for teaching me <a href="http://questionablecontent.net/view.php?comic=2673">how to draw a kitten</a></li>
+        <li>azule for <a href="http://fora.xkcd.com/viewtopic.php?p=3544870#p3544870">xkcd-Regular.woff</a></li>
+      </ul>
     </section>
 
     <script type="application/dart" src="generate_a_kitten.dart"></script>

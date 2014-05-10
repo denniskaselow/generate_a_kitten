@@ -10,9 +10,8 @@ class TweeningSystem extends VoidEntitySystem {
 
 abstract class RandomizingSystem extends EntityProcessingSystem {
   bool randomize = false;
-  ComponentMapper<BezierPath> bpm;
   EventType eventType;
-  RandomizingSystem(this.eventType, List<Type> types) : super(Aspect.getAspectForAllOf([BezierPath]).allOf(types));
+  RandomizingSystem(this.eventType, List<Type> types) : super(Aspect.getAspectForAllOf(types));
 
   @override
   void initialize() {
@@ -28,6 +27,11 @@ abstract class RandomizingSystem extends EntityProcessingSystem {
   bool checkProcessing() => randomize;
 
   double getRandom(num min, num max) => min + random.nextDouble() * (max - min);
+}
+
+abstract class RandomizingBezierPathSystem extends RandomizingSystem {
+  ComponentMapper<BezierPath> bpm;
+  RandomizingBezierPathSystem(EventType eventType, List<Type> types) : super(eventType, [BezierPath]..addAll(types));
 
   void tweenPath(BezierPath path, int index, List<double> newValues) {
     Tween.to(path, index, 0.5)
@@ -51,7 +55,7 @@ abstract class RandomizingSystem extends EntityProcessingSystem {
   }
 }
 
-class HeadRandomizingSystem extends RandomizingSystem {
+class HeadRandomizingSystem extends RandomizingBezierPathSystem {
   HeadRandomizingSystem() : super(randomizeHeadEvent, [Head]);
 
   @override
@@ -70,7 +74,7 @@ class HeadRandomizingSystem extends RandomizingSystem {
   }
 }
 
-class EarsRandomizingSystem extends RandomizingSystem {
+class EarsRandomizingSystem extends RandomizingBezierPathSystem {
   EarsRandomizingSystem() : super(randomizeEarsEvent, [Head]);
 
   @override
@@ -94,7 +98,7 @@ class EarsRandomizingSystem extends RandomizingSystem {
   }
 }
 
-class EyeRandomizingSystem extends RandomizingSystem {
+class EyeRandomizingSystem extends RandomizingBezierPathSystem {
   double x0, x1, x2, x3;
   double y0, y1, y2, y3;
   bool useCutenessBug;
@@ -133,7 +137,7 @@ class EyeRandomizingSystem extends RandomizingSystem {
 
 }
 
-class MouthRandomizingSystem extends RandomizingSystem {
+class MouthRandomizingSystem extends RandomizingBezierPathSystem {
   double x1, x2, x4;
   double y1, y2, y3, y4;
   ComponentMapper<Mouth> mm;
@@ -160,7 +164,7 @@ class MouthRandomizingSystem extends RandomizingSystem {
   }
 }
 
-class BodyRandomizingSystem extends RandomizingSystem {
+class BodyRandomizingSystem extends RandomizingBezierPathSystem {
   ComponentMapper<Body> bm;
   double x1, x2, x3, x4;
   double y1, y2, y3, y4;
@@ -192,7 +196,7 @@ class BodyRandomizingSystem extends RandomizingSystem {
   }
 }
 
-class TailRandomizingSystem extends RandomizingSystem {
+class TailRandomizingSystem extends RandomizingBezierPathSystem {
   TailRandomizingSystem() : super(randomizeTailEvent, [Tail]);
 
   @override
@@ -244,22 +248,42 @@ class MonocleUpdatingSystem extends EntityProcessingSystem {
 
     var lowerHeadStartY = bpHead.path[4].storage[7];
     var lowerHeadStartControlPointY = bpHead.path[5].storage[1];
-    var connectionStartY = lowerHeadStartControlPointY - 0.6 * (lowerHeadStartControlPointY - lowerHeadStartY);
+    var t = 0.6;
+    var connectionStartY = lowerHeadStartControlPointY - t * (lowerHeadStartControlPointY - lowerHeadStartY);
 
     var lowerHeadEndControlPointY = bpHead.path[5].storage[4];
     var lowerHeadEndY = bpHead.path[5].storage[7];
 
-    var connectionMiddleY = lowerHeadEndControlPointY - 0.6 * (lowerHeadEndControlPointY - lowerHeadStartControlPointY);
-    var connectionEndY = lowerHeadEndY - 0.6 * (lowerHeadEndY - lowerHeadStartControlPointY);
+    var connectionMiddleY = lowerHeadEndControlPointY - t * (lowerHeadEndControlPointY - lowerHeadStartControlPointY);
+    var connectionEndY = lowerHeadEndY - t * (lowerHeadEndY - lowerHeadStartControlPointY);
 
-    var lowerHeadY1 = connectionMiddleY - 0.6 * (connectionMiddleY - connectionStartY);
-    var lowerHeadY2 = connectionEndY - 0.6 * (connectionEndY - connectionMiddleY);
-    var lowerHeadY = lowerHeadY2 - 0.6 * (lowerHeadY2 - lowerHeadY1);
+    var lowerHeadY1 = connectionMiddleY - t * (connectionMiddleY - connectionStartY);
+    var lowerHeadY2 = connectionEndY - t * (connectionEndY - connectionMiddleY);
+    var lowerHeadY = lowerHeadY2 - t * (lowerHeadY2 - lowerHeadY1);
 
     bp.offset.x = bpEye.offset.x;
     bp.offset.t = bpEye.offset.y;
     bp.path[3].storage[3] = bp.path[3].storage[3] + diffX;
     bp.path[3].storage[6] = bp.path[3].storage[6] + diffX;
     bp.path[3].storage[7] = lowerHeadY + bpHead.offset.y - bp.offset.y;
+  }
+}
+
+class ShuffleTextSystem extends RandomizingSystem {
+  ComponentMapper<Word> wm;
+  ShuffleTextSystem() : super(shuffleTextEvent, [Word]);
+
+  @override
+  void processEntity(Entity entity) {
+    var w = wm.get(entity);
+
+    Tween.to(w, Word.POSITION, 1.0)
+             ..targetValues = [w.baseX + getRandom(-25, 25), w.baseY + getRandom(-25, 25)]
+             ..easing = Bounce.OUT
+             ..start(myManager);
+    Tween.to(w, Word.ANGLE, 1.0)
+             ..targetValues = [getRandom(-PI/4, PI/4)]
+             ..easing = Bounce.OUT
+             ..start(myManager);
   }
 }

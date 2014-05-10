@@ -21,6 +21,7 @@ final randomizeMouthEvent = new EventType<RandomizeMouth>();
 final randomizeTailEvent = new EventType<RandomizeTail>();
 final randomizeBodyEvent = new EventType<RandomizeBody>();
 final randomizeMonocleEvent = new EventType<RandomizeMonocle>();
+final shuffleTextEvent = new EventType<ShuffleText>();
 
 class RandomizeHead {}
 class RandomizeEars {}
@@ -29,3 +30,4 @@ class RandomizeMouth {}
 class RandomizeBody {}
 class RandomizeTail {}
 class RandomizeMonocle {}
+class ShuffleText {}

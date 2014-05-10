@@ -5,7 +5,9 @@ import 'package:generate_a_kitten/client.dart';
                              HeadRandomizingSystem, EyeRandomizingSystem,
                              MouthRandomizingSystem, TailRandomizingSystem,
                              BodyRandomizingSystem, MonocleRenderingSystem,
-                             BodyPartRenderingSystem, MonocleUpdatingSystem
+                             BodyPartRenderingSystem, MonocleUpdatingSystem,
+                             RandomizingBezierPathSystem, ShuffleTextSystem,
+                             OttificationSystem
                             ])
 import 'dart:mirrors';
 
@@ -16,7 +18,7 @@ void main() {
 
 class Game extends GameBase {
 
-  Game() : super.noAssets('generate_a_kitten', 'canvas', 500, 300);
+  Game() : super.noAssets('generate_a_kitten', 'canvas', 500, 350);
 
   void createEntities() {
     var tm = world.getManager(TagManager);
@@ -122,6 +124,12 @@ class Game extends GameBase {
           new Matrix3(0.0, -5.0, 0.0, 5.0, -10.0, 0.0, 5.0, -10.0, 0.0)
        ])
     ]);
+    for (int i = 0; i < 6; i++) {
+      addEntity([new Word('Molpy', 100 + (i % 2) * 300, 50 + (i ~/ 2) * 60, angle: -PI/4 + PI/2 * random.nextDouble())]);
+    }
+    for (int i = 0; i < 2; i++) {
+      addEntity([new Word('Grapevine', 100 + (i % 2) * 300, 230, angle: -PI/4 + PI/2 * random.nextDouble())]);
+    }
   }
 
   List<EntitySystem> getSystems() {
@@ -133,9 +141,11 @@ class Game extends GameBase {
             new MouthRandomizingSystem(),
             new BodyRandomizingSystem(),
             new TailRandomizingSystem(),
+            new ShuffleTextSystem(),
             new MonocleUpdatingSystem(),
             new CanvasCleaningSystem(canvas),
             new TweeningSystem(),
+            new OttificationSystem(canvas),
             new BodyPartRenderingSystem(ctx),
             new MonocleRenderingSystem(ctx),
             new DebugBezierRenderingSystem(ctx),
