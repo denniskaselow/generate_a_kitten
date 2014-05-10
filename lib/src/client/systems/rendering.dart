@@ -1,5 +1,14 @@
 part of client;
 
+class CanvasCleaningSystem extends VoidEntitySystem {
+  CanvasElement canvas;
+
+  CanvasCleaningSystem(this.canvas);
+
+  void processSystem() {
+    canvas.context2D.clearRect(0, 0, canvas.width, canvas.height);
+  }
+}
 
 class BezierRenderingSystem extends EntityProcessingSystem {
   CanvasRenderingContext2D ctx;

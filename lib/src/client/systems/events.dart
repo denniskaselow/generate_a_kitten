@@ -62,7 +62,7 @@ class ButtonListeningSystem extends VoidEntitySystem {
     querySelector('#saveKitten').onClick.listen((_) {
       eventBus.fire(analyticsTrackEvent, new AnalyticsTrackEvent('Save', 'PNG'));
       var trimmedCanvas = cq(cq(canvas).copy());
-      var rect = trimmedCanvas.trim(color: '#FFFFFF');
+      var rect = trimmedCanvas.trim();
       var dataUrl = trimmedCanvas.canvas.toDataUrl("image/png");
       (querySelector('#saveKitten') as AnchorElement).href = dataUrl;
     });
